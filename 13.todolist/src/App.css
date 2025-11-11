@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -27,28 +28,7 @@
 .App-link {
   color: #61dafb;
 }
-.list{
-  margin-top: 20px;
-  text-align: left;
-  padding: 5px 0 5px 10px;
-    border-bottom : 1px solid;
-}
 
-span{
-  cursor: pointer;
-  margin: 0 20px;
-}
-
-.modal {
-  margin-top: 20px;
-  text-align: left;
-  padding: 5px 0 5px 20px;
-  background-color: rgb(147, 164, 118);
-}
-
-.title{
-  cursor: pointer;
-}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

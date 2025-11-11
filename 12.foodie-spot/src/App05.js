@@ -23,7 +23,7 @@ function App() {
                 copy[i] += 1 ;
                 setLike(copy);
               }
-                }>🥇</span>&emsp;{like[i]}&emsp;&emsp;
+                }>🥇</span>&emsp;{like[i]}</p>
 
 
                 <button onClick={()=>{
@@ -34,7 +34,7 @@ function App() {
                   setTitle(copy);
                   setLike(l)
                 }}>삭제</button>
-                </p>
+
 
             </div>
           )

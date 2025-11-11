@@ -1,0 +1,26 @@
+
+/* 검색 input */
+.add-bar input {
+  flex: 1; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.add-bar input:focus {
+  border-color: #007bff; 
+}
+
+.add-bar button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-bar button:hover {
+  background-color: #0056b3; 
+}
