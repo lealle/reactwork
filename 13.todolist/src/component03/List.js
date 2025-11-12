@@ -2,14 +2,8 @@ import { useState } from "react";
 import TodoItem from "./TodoItem";
 import "./List.css"; 
 
-const List = ({todos, onDelete, onUpdate}) => {
+const List = ({todos}, {onDelete}) => {
     let [title, setTitle] = useState('');
-    // getFilterDate 로 search를 받고 filter 함수로 search를 include 함수로 체크 
-
-    // const onClickDelete = (count) =>{
-    //     onDelete(count);
-    // }
-    
     return (
         <div className="ListContainer"> 
             <h4>Todo List🎈✔</h4>
@@ -22,23 +16,26 @@ const List = ({todos, onDelete, onUpdate}) => {
             </div>
 
             <hr />
-
+{/* 
+            <div className="list-wrapper">
+                
+                <TodoItem />
+                <TodoItem />
+                <TodoItem />
+            </div> */}
     { 
         todos.map((todo,i) => {
-            //if(todo.content.includes(title)){
-            if(todo.content.toLowerCase().includes(title.toLowerCase())){
+            if(todo.content.includes(title)){
 
-                // todos.content.toLowerCase().includes;  
-                // todo.content.toLowerCase().includes(title.toLowerCase())써서 대소문자 안가리게 할 수 있음
                 return (
                     <div className="list-wrapper">
-              <TodoItem todo={todo} onDelete={onDelete} onUpdate={onUpdate}/>
+              <TodoItem todo={todo} onDelete={onDelete}/>
               {/* <TodoItem todo={todos[i]}/> */}
             </div>
                 )
             }
         }) 
-    }
+      }
             
         </div>
         

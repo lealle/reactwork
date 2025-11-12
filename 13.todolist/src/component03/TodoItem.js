@@ -3,20 +3,20 @@ import './TodoItem.css'; // 1. CSS 파일 import
 
 // const TodoItem = (props) => {
 // const TodoItem = ({id, content, ...}) => {
-    // 중괄호 안에 같이 넣기 따로 넣었다가 오류떔에 고생함(정의안되더라)
-const TodoItem = ({todo, onDelete, onUpdate}) => {
+const TodoItem = ({todo}, {onDelete}) => {
     return (
         <div className="TodoItem">
             
-            <input type="checkbox" checked={todo.isDone} onChange={()=>{
-                onUpdate(todo.id);
-            }}/>
+            <input type="checkbox" checked={todo.isDone}/>
             
             <span className="title">{todo.content}</span>
-            <span className="date">{new Date(todo.date).toLocaleDateString()}</span>
+            <span className="date">{todo.date}</span>
 
             <button onClick={()=>{
                 onDelete(todo.id);
+                // let copy = [...todo];
+                // copy.splice(todo.id,1);
+                // setTodos(copy);
             }}>삭제</button>
             
         </div>

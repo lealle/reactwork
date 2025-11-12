@@ -1,0 +1,45 @@
+.TodoItem {
+  display: flex;
+  align-items: center; 
+
+  border-bottom: 1px solid #f0f0f0;
+  
+  padding: 15px 10px; 
+  
+  gap: 15px; 
+}
+
+.TodoItem .title {
+  /* 4. ★★★ 핵심 ★★★
+     이 요소(text)가 남는 공간을 모두 차지하도록 만듭니다.
+     이렇게 하면 Date와 삭제 버튼은 자동으로 오른쪽으로 밀려납니다. */
+  flex: 1; 
+
+  font-size: 16px;
+  color: #333;
+}
+.TodoItem .content {
+  flex: 1; 
+
+  font-size: 16px;
+  color: #333;
+}
+
+.TodoItem .date {
+  font-size: 14px;
+  color: #888;
+}
+
+.TodoItem button {
+  border: none;
+  background-color: #e63946; 
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.TodoItem button:hover {
+  background-color: #d00000; 
+}

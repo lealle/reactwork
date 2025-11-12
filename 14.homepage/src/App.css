@@ -1,0 +1,62 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.main-bg{
+  height: 500px;
+  
+  /* background-image: url('./img/img1.jpg');  src img 폴더에 있을때*/
+  background-image: url('../public/img/img1.jpg'); /* public img 폴더에 있을때 */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cloth-img {
+  width: 100%;        /* 부모(Col) 너비에 꽉 차게 */
+  height: 300px;      /* 원하는 높이로 고정 (숫자는 조절 가능) */
+  object-fit: cover;  /* 비율을 유지하면서 꽉 채우기 (찌그러짐 방지) */
+  border-radius: 5px; /* 모서리 살짝 둥글게 (선택사항) */
+}
+
+.detail{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
