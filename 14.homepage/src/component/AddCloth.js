@@ -2,12 +2,16 @@ import { useState } from "react"
 
 const AddCloth = ({addCloth}) => {
     const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
     const [price, setPrice] = useState(0);
     
     return(
         <>
             <input onChange={(e)=>{
                 setTitle(e.target.value);
+            }}></input>
+            <input onChange={(e)=>{
+                setContent(e.target.value);
             }}></input>
 
             <input onChange={(e)=>{

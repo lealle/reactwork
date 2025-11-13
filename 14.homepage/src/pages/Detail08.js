@@ -2,10 +2,16 @@ import { Button, Container, Col, Row, Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import './Detail.css';
-import Store, { addItem } from '../store/store';
+import { Context1 } from '../App';
+
 
 function Detail(props){
     
+    // useContext() : Context1를 해체해 준다. {stock,cloth} 
+    let a = useContext(Context1);
+    // console.log(a);
+    // console.log(a.stock);
+    // console.log(a.cloth);
 
     let {pid} = useParams();
     let {member} = useParams();
@@ -18,6 +24,7 @@ function Detail(props){
     
     let [tab, setTab] =useState(0);
     const [fade, setFade] = useState('');
+    let stock = a.stock;
 
     useEffect(()=>{
         let timer = setTimeout(()=>{setAlert(false)}, 2000);
@@ -49,8 +56,7 @@ function Detail(props){
                     <p>{findId.content}</p>
                     <p>{findId.price}원</p>
                 </div>
-                    <Button variant="info" onClick={()=>{
-                    }}>주문하기</Button>
+                    <Button variant="info">주문하기</Button>
                 </Col>
                 </Row>
             </Container>

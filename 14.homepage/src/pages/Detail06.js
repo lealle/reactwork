@@ -1,12 +1,10 @@
 import { Button, Container, Col, Row, Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import './Detail.css';
-import Store, { addItem } from '../store/store';
-
+ // 배열로 정보를 보여주면 삭제시 다른 정보를 보여줄수도 있음 
+// id를 찾아서 그 정보를 보여주는것이 오류를 줄일 수 있음 
 function Detail(props){
-    
-
     let {pid} = useParams();
     let {member} = useParams();
 
@@ -17,22 +15,17 @@ function Detail(props){
     let [alert, setAlert] = useState(true);
     
     let [tab, setTab] =useState(0);
-    const [fade, setFade] = useState('');
+
 
     useEffect(()=>{
+        // 3초가 지나면 alert 값을 false 로 넣으시오 
         let timer = setTimeout(()=>{setAlert(false)}, 2000);
         return()=>{
             clearTimeout(timer);
         }
     })
-
-    useEffect(()=>{
-        let end = setTimeout(()=>{setFade('end')},100)
-        return() =>{
-            clearTimeout(end);
-            setFade('');
-        }
-    },[tab])
+    // 오 잘되넹 
+    // 배열 넣을시 맨 처음에 생성 없을시 리렌더링시 생성 return 있으면 unmount시 실행 
     return (    
         <div className="detail">
             {
@@ -44,13 +37,10 @@ function Detail(props){
                     <img src={`${process.env.PUBLIC_URL}/img/cloth${findId.id}.jpg`}></img>
                 </Col>
                 <Col >
-                <div className={`start ${fade}`}>
                     <h4>{findId.title}</h4>
                     <p>{findId.content}</p>
                     <p>{findId.price}원</p>
-                </div>
-                    <Button variant="info" onClick={()=>{
-                    }}>주문하기</Button>
+                    <Button variant="info">주문하기</Button>
                 </Col>
                 </Row>
             </Container>
@@ -74,8 +64,36 @@ function Detail(props){
         </Nav.Link>
       </Nav.Item>
     </Nav>
+    {TabContent(tab)} 
+    {/* 배열이면 {}로 받아야겠지만 그냥 상수값이므로 그냥 받음  */}
+    {TabContent1({tab})} 
+    {/* { tab == 0 ? 
+        <div>내용0</div>
+     : tab == 1 ? <div>내용1</div> : <div>내용2</div>  
+    } */}
         </div>
     )
+}
+
+function TabContent(tab){
+    if(tab == 0){
+        return <div>내용0</div>;
+    }
+    if(tab == 1){
+        return <div>내용1</div>;
+    }
+    if(tab == 2){
+        return <div>내용2</div>;
+    }
+}
+function TabContent1({tab}){
+    let arr = [
+        <h1>내용0</h1>,
+        <h1>내용1</h1>,
+        <h1>내용2</h1>
+    ];
+    return arr[tab];
+        
 }
 
 

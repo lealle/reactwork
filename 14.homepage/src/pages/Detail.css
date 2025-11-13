@@ -1,0 +1,68 @@
+/* 1. 전체 레이아웃 여백 및 정렬 */
+.detail {
+  padding-top: 60px;
+  padding-bottom: 80px;
+  /* App.css의 전체 가운데 정렬을 무시하고, 여기서만 왼쪽 정렬을 강제합니다. */
+  text-align: left !important; 
+}
+
+/* 2. 수직 중앙 정렬 (Row에 접근) */
+/* .detail 안에 있는 row 클래스(Bootstrap)를 찾아서 아이템을 수직 가운데로 맞춤 */
+.detail .row {
+  display: flex;
+  align-items: center;
+}
+
+/* 3. 이미지 스타일 (왼쪽) */
+/* JS에 클래스가 없으므로 태그로 직접 선택 */
+.detail img {
+  width: 100%;          /* Col 넓이에 꽉 차게 */
+  max-height: 500px;    /* 너무 길어지지 않게 제한 */
+  object-fit: cover;    /* 비율 유지하며 예쁘게 채우기 */
+  border-radius: 12px;  /* 모서리 둥글게 */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08); /* 고급스러운 그림자 */
+}
+
+/* 4. 텍스트 영역 스타일 (오른쪽) */
+/* 두 번째 Col을 꾸미기 위해 h4, p 태그를 직접 타겟팅 */
+.detail h4 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 20px;
+  word-break: keep-all; /* 한글 줄바꿈 예쁘게 */
+}
+
+.detail p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* 가격 폰트 강조 */
+.detail p:nth-of-type(2) { /* 두 번째 p태그가 가격이므로 */
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+/* 버튼 스타일 */
+.detail button {
+  padding: 10px 40px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* 할인 박스 */
+.sale {
+  background: #ffeaa7;
+  color: #d63031;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  font-weight: bold;
+}

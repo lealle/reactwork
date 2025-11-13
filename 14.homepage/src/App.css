@@ -1,62 +1,125 @@
+/* --- App.css 전체 복사 붙여넣기 --- */
+/* App.css AI로 제작 */
+
 .App {
   text-align: center;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  color: #333;
 }
 
+/* 네비게이션 바 등 기본 스타일 유지 */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.main-bg {
+  height: 300px;
+  background-color: #f8f9fa;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 50px;
+  /* 이미지 경로가 맞는지 확인하세요 */
+  background-image: url('../public/img/321.jpg'); 
+}
+
+/* ==================================================
+   ★ 핵심 수정 파트: Bootstrap Row/Col 강제 개조
+   ================================================== */
+
+/* 1. Bootstrap의 Row를 CSS Grid로 변경 */
+/* 주의: 이 설정은 .App 안에 있는 모든 Row에 적용됩니다. */
+.App .container .row {
+  display: grid !important;
+  /* 무조건 3개씩 배치 */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px; /* 카드 사이 간격 */
+  margin: 0 !important; /* Bootstrap 기본 마진 제거 */
+}
+
+/* 2. Bootstrap의 Col 속성 초기화 */
+.App .container .row .col {
+  width: auto !important;
+  max-width: none !important;
+  flex: none !important; /* Flex 속성 해제 */
+  padding: 0 !important; /* 불필요한 여백 제거 */
+}
+/* 화면별 세팅 해주는것 이전 css수업에서도 했음  */
+/* 화면이 작아지면(태블릿 등) 2개씩 보이기 */
+@media screen and (max-width: 992px) {
+  .App .container .row {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* 모바일에서는 1개씩 보이기 */
+@media screen and (max-width: 576px) {
+  .App .container .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================================================
+   ★ Cloth 컴포넌트 디자인 (이미지, 텍스트)
+   ================================================== */
+
+/* 카드 전체 틀 */
+.cloth-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%; /* 높이를 꽉 채워서 정렬 맞춤 */
+  text-align: left; /* 텍스트 왼쪽 정렬 (가운데 원하시면 center) */
+  transition: transform 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.cloth-card:hover {
+  transform: translateY(-5px); /* 마우스 올리면 살짝 위로 / 효과 나름 좋은듯  */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.main-bg{
-  height: 500px;
-  
-  /* background-image: url('./img/img1.jpg');  src img 폴더에 있을때*/
-  background-image: url('../public/img/img1.jpg'); /* public img 폴더에 있을때 */
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
+/* 이미지 스타일 */
 .cloth-img {
-  width: 100%;        /* 부모(Col) 너비에 꽉 차게 */
-  height: 300px;      /* 원하는 높이로 고정 (숫자는 조절 가능) */
-  object-fit: cover;  /* 비율을 유지하면서 꽉 채우기 (찌그러짐 방지) */
-  border-radius: 5px; /* 모서리 살짝 둥글게 (선택사항) */
+  width: 100%;
+  height: 280px;        /* ★중요: 이미지 높이 고정 */
+  object-fit: cover;    /* ★중요: 비율 유지하며 꽉 채우기 */
+  border-radius: 8px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* 살짝 그림자 */
 }
 
-.detail{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* 상품 제목 (h4) */
+.cloth-card h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #222;
+  word-break: keep-all; /* 한글 단어 끊김 방지 */
+  line-height: 1.4;
+}
 
+/* 상품 가격 (p) */
+.cloth-card p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  margin: 0;
+}
+
+/* 가격 뒤에 '원' 붙이기 */
+.cloth-card p::after {
+  content: "원";
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+
+
+.start {
+  opacity: 0;
+}
+
+.end{
+  opacity: 1;
+  transition: opacity 2s;
 }

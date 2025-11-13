@@ -7,7 +7,6 @@ import AddCloth from './component/AddCloth';
 import Cloth from './component/Cloth';
 import { Route, Routes,  useNavigate } from 'react-router-dom';
 import Detail from './pages/Detail';
-import Cart from './pages/Cart';
 import clothList from './data/data2.json';
 import { Button } from "react-bootstrap";
 import axios from 'axios';
@@ -18,20 +17,15 @@ import axios from 'axios';
 
       2. Redux라는 외부 라이브러리
       주로 사용 
-      1) 설치 npm i @reduxjs/toolkit react-redux
+
       Redux 설치
-
-      2) 공동으로 사용하는 js 파일 만들기 (store/store.js)
-
-    > Cart 의 장바구니에 들어가 값들을 redux로 사용 
-
-
 
 
 */
      
      
      
+export let Context1 = createContext(); // Context API 생성 
 function App() {
 
   const [clickCnt, setClickCnt] = useState(3);
@@ -63,6 +57,7 @@ function App() {
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(`/detail`)}}>detail</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/cart')}}>cart</Nav.Link>
            
 
@@ -104,15 +99,12 @@ function App() {
           </div>
         }/> 
         <Route path='/detail/:pid' element={
+            <Context1.Provider value={{stock, cloth}}>
               <Detail cloth={cloth} />
+            </Context1.Provider >
         } 
           />
-        <Route path='/cart' element={
-          <div>
-
-            <Cart/>
-          </div>
-          } />
+        <Route path='/cart' element={<div>장바구니임</div>} />
         <Route path='/*' element={<div>없는 페이지 입니다.</div>} />
       </Routes>
         </div>
