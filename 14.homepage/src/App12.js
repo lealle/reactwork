@@ -33,34 +33,6 @@ import axios from 'axios';
      
      
 function App() {
-  // localStorage : 웹페이지에 있는 저장공간. 청소만 하지않으면 반영구적임
-  localStorage.setItem('addr','한국빌딩');
-
-  // 배열이나 객체 사용 불가
-  // 대신 json의 형태로 넣을 수 있음
-  // let obj = {tel : '02-222-2220'};  // 이렇게 넣으면 그냥 [Object, Object] 들어감 
-  let obj = {tel : '02-222-2220'};
-  let json = JSON.stringify(obj);
-  localStorage.setItem('data1',json);
-  
-  let user = {
-    name : 'kim',
-    age : 25,
-    hobbies : ['gaming', 'reading']
-  }
-  localStorage.setItem('user',JSON.stringify(user));
-  
-  // 가져오기 
-  let getUser = localStorage.getItem('user');
-  console.log(getUser);
-
-  // 가져오면 json 형태를 object의 형태로 바꿔줌 
-  let o = JSON.parse(getUser);
-  console.log(o);
-  console.log(o.name);
-  
-
-
 
   const [clickCnt, setClickCnt] = useState(3);
   const goDetail = (i) => {

@@ -8,7 +8,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
         }
     }
 */
-let cnt = 3;
+
 let user = createSlice({
     name : "lee",  
     initialState : 3 
@@ -31,32 +31,21 @@ export let { changeName  } = user1.actions
 let product = createSlice({
     name : "product",
     initialState :    [
-        {id:11, name:'jacket' , count: 1},
-        {id:13, name:'knitt' , count: 2}
+        {id:1, name:'jacket' , count: 1},
+        {id:3, name:'knitt' , count: 2}
     ] ,
     reducers : {
         changeCount(state, action){ // actiom 변수
             let item = state.find((x)=> x.id == action.payload) // .payload 변수값을 받아서 가져다준다.
-            if(item){
-                item.count++;
-            }
             
-        },
-        addProduct(state, action){
-            let item = state.find((x)=> x.id == action.payload.id); // .payload 변수값을 받아서 가져다준다.
             if(item){
                 item.count++;
-                return;
             }
-
-            let item2 = {id:action.payload.id, name:action.payload.title, count:1};
-            state.push(item2);
-
         }
     }
 })
 
-export let { changeCount, addProduct   } = product.actions
+export let { changeCount   } = product.actions
 /*
 변경하는 값이 array/object 인 경우 
 */

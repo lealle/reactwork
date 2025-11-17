@@ -1,11 +1,16 @@
 import { Button, Container, Col, Row, Nav } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import './Detail.css';
-import Store, { addItem } from '../store/store';
+import Store, { addItem, addProduct } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function Detail(props){
-    
+    // 최근 본 상품 하고 넣어주기 (useEffect 사용하여 )
+
+    let dispatch = useDispatch();
+    const navigate = useNavigate();
 
     let {pid} = useParams();
     let {member} = useParams();
@@ -33,6 +38,22 @@ function Detail(props){
             setFade('');
         }
     },[tab])
+    
+    useEffect(()=>{
+        let p = localStorage.getItem('recentProduct'); // json 반환
+        if ( p  === null) { // 없을시 생성 
+            localStorage.setItem('recentProduct', JSON.stringify([]));
+            p = '[]'; 
+        }
+        p = JSON.parse(p) // 객체로 변환 
+        p.push(findId.id); // 객체로 push
+        p = [...new Set(p)];
+        p = JSON.stringify(p); // json 변환 
+        localStorage.setItem('recentProduct',p)
+    },[])
+
+
+
     return (    
         <div className="detail">
             {
@@ -50,6 +71,8 @@ function Detail(props){
                     <p>{findId.price}원</p>
                 </div>
                     <Button variant="info" onClick={()=>{
+                        dispatch(addProduct(findId));
+                        navigate('/Cart');
                     }}>주문하기</Button>
                 </Col>
                 </Row>
@@ -74,9 +97,63 @@ function Detail(props){
         </Nav.Link>
       </Nav.Item>
     </Nav>
+
+        <RecentViewed cloth={props.cloth} />
+
         </div>
     )
 }
 
+function RecentViewed({cloth}){
+    const [recent, setRecent] = useState([]);
+    useEffect(()=>{
+        let p = localStorage.getItem('recentProduct'); // json 반환
+        p = JSON.parse(p) // 객체로 변환 
+        p = p.slice().reverse();
+        
+        let products = p.map(id => cloth.find(c => c.id == id))
+                         .filter(Boolean)
+        setRecent(products)
+    },[cloth])
+    return(
+         <div>
+            <h4>⚆_⚆ 최근 본 상품</h4>
+            <div style={{display:'flex'}}>
+                {
+                    recent.map(item => (
+                        <div>
+                            <img src={`${process.env.PUBLIC_URL}/img/cloth${item.id}.jpg`} style={{width: '40%'}}/>
+                            <div>
+                                <strong>{item.title}</strong>
+                                <p>{item.price}원</p>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    )
+
+}
+function RecentViewed1({cloth}){
+        let p = localStorage.getItem('recentProduct'); // json 반환
+        p = JSON.parse(p) // 객체로 변환 
+        let cloth1 = cloth.filter((x) => p.includes(x.id));
+    return (
+        <table>
+            <tbody>
+                {
+                cloth1.map((c) => (
+                    <tr key={c.id}>
+                        <td>{c.id}</td>
+                        <td>{c.name}</td>
+                        <td>{c.count}</td>
+                    </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+    );
+}
 
 export default Detail;
