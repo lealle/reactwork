@@ -34,6 +34,10 @@ import axios from 'axios';
      
 function App() {
 
+
+
+
+
   const [clickCnt, setClickCnt] = useState(3);
   const goDetail = (i) => {
     navigate(`/detail/${i}`);

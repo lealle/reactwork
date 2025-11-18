@@ -5,22 +5,18 @@ import './Detail.css';
 import Store, { addItem, addProduct } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 function Detail(props){
-    let dispatch = useDispatch();
-    const navigate = useNavigate();
-
     let {pid} = useParams();
     let {member} = useParams();
-
-    let findId = props.cloth.find(item =>
-        item.id == pid
-    );
-
+    let findId = props.cloth.find(item =>item.id == pid);
     let [alert, setAlert] = useState(true);
-    
     let [tab, setTab] =useState(0);
     const [fade, setFade] = useState('');
+    
+    const navigate = useNavigate();
 
     useEffect(()=>{
         let timer = setTimeout(()=>{setAlert(false)}, 2000);
@@ -69,9 +65,16 @@ function Detail(props){
                     <p>{findId.price}원</p>
                 </div>
                     <Button variant="info" onClick={()=>{
-                        dispatch(addProduct(findId));
-                        navigate('/Cart');
-                    }}>주문하기</Button>
+                        axios.post('/react/addCart',{id:findId.id, title: findId.title, content:findId.content})
+                                .then(result=>{
+                                    console.log(result);
+                                    navigate('/Cart');
+                                })
+                                .catch((error)=>{
+                                    console.log("실패",error);
+                                })
+                        
+                    }}>장바구니에 담기</Button>
                 </Col>
                 </Row>
             </Container>
@@ -95,8 +98,7 @@ function Detail(props){
         </Nav.Link>
       </Nav.Item>
     </Nav>
-
-        <RecentViewed cloth={props.cloth} />
+        <RecentViewed cloth={props.cloth}/>
 
         </div>
     )
@@ -132,26 +134,6 @@ function RecentViewed({cloth}){
         </div>
     )
 
-}
-function RecentViewed1({cloth}){
-        let p = localStorage.getItem('recentProduct'); // json 반환
-        p = JSON.parse(p) // 객체로 변환 
-        let cloth1 = cloth.filter((x) => p.includes(x.id));
-    return (
-        <table>
-            <tbody>
-                {
-                cloth1.map((c) => (
-                    <tr key={c.id}>
-                        <td>{c.id}</td>
-                        <td>{c.name}</td>
-                        <td>{c.count}</td>
-                    </tr>
-                    ))
-                }
-            </tbody>
-        </table>
-    );
 }
 
 export default Detail;

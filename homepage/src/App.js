@@ -3,31 +3,18 @@ import {Container, Nav, Navbar} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col } from 'react-bootstrap';
 import { useState, useRef, createContext } from 'react';
-import AddCloth from './component/AddCloth';
 import Cloth from './component/Cloth';
 import { Route, Routes,  useNavigate } from 'react-router-dom';
 import Detail from './pages/Detail';
+import Cart from './pages/Cart';
+import SignUp from './pages/SignUp';
 import clothList from './data/data2.json';
 import { Button } from "react-bootstrap";
 import axios from 'axios';
-/*
-  * single page 자료 공유의 단점
-  - 컴포넌트 간 state 공유 어려움 
 
-
-      2. Redux라는 외부 라이브러리
-      주로 사용 
-
-      Redux 설치
-
-      
-
-
-*/
      
      
      
-export let Context1 = createContext(); // Context API 생성 
 function App() {
 
   const [clickCnt, setClickCnt] = useState(3);
@@ -59,8 +46,8 @@ function App() {
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate(`/detail`)}}>detail</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/cart')}}>cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/signup')}}>SignUp</Nav.Link>
            
 
           </Nav>
@@ -87,7 +74,6 @@ function App() {
       <Button variant="success" onClick={()=>{
         axios.get(`https://raw.githubusercontent.com/lealle/data/refs/heads/main/data${clickCnt}.json`)
         .then(result =>{
-          // 성공 핸들링
           console.log(clickCnt); 
           let copy = clickCnt+1;
           setCloth([...cloth, ...result.data]);
@@ -101,13 +87,22 @@ function App() {
           </div>
         }/> 
         <Route path='/detail/:pid' element={
-            <Context1.Provider value={{stock, cloth}}>
               <Detail cloth={cloth} />
-            </Context1.Provider >
         } 
           />
-        <Route path='/cart' element={<div>장바구니임</div>} />
+        <Route path='/cart' element={
+          <div>
+            <Cart/>
+          </div>
+          } />
+        
+        <Route path='/signup' element={
+            <div>
+              <SignUp/>
+            </div>
+        } />
         <Route path='/*' element={<div>없는 페이지 입니다.</div>} />
+      
       </Routes>
         </div>
   );
