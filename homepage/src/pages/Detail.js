@@ -65,10 +65,19 @@ function Detail(props){
                     <p>{findId.price}원</p>
                 </div>
                     <Button variant="info" onClick={()=>{
-                        axios.post('/react/addCart',{id:findId.id, title: findId.title, content:findId.content})
+                        const user = JSON.parse(sessionStorage.getItem('loginUser'));
+
+                        if(!user){
+                            alert('로그인 후 사용가능합니다.');
+                            navigate('/login')
+                            return;
+                        }
+                        axios.post('http://localhost:8080/react/addCart',{clothId:findId.id, title: findId.title, content:findId.content, memId: user.email})
                                 .then(result=>{
+                                    if(result.data == "ok"){
+                                        navigate('/Cart');
+                                    }
                                     console.log(result);
-                                    navigate('/Cart');
                                 })
                                 .catch((error)=>{
                                     console.log("실패",error);

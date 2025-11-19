@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import DaumPostcodeEmbed from 'react-daum-postcode';
-const PostCode = ({onComplete}) => {
+import Button from './../../../09.props/src/component/Button';
+const PostCode = () => {
     const open = useDaumPostcodePopup(scriptUrl);
 
     
@@ -36,7 +37,7 @@ const PostCode = ({onComplete}) => {
   };
 
   return (
-    <DaumPostcodeEmbed onComplete={handleComplete} />
+    <Button onClick={handleClick}>open</Button>
   );
 };
 

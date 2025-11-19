@@ -3,9 +3,10 @@ import { Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import PostCode from './PostCode';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
+import DaumPostcodeEmbed from 'react-daum-postcode';
+
 
 
 const SignUp = () =>{
@@ -36,11 +37,16 @@ const SignUp = () =>{
     const [isEmailCheck, setIsEmailCheck] = useState(false);
     
     const handleSubmit = (e)=>{
+        // 개인적 실수를 통한 학습 
+         e.preventDefault();
+         // 브라우저의 기본 동작 막기
+         // submit 기본동작 -> 폼 전송 후 페이지 새로고침
+         // e.preventDefault(); -> 새로고침 없음 -> axios를 통해 비동기(AJAX)로 전송
         if(!isEmailCheck){
             alert("이메일 중복 확인을 해주세요");
             return;
         }
-        axios.post('/react/signup',form)
+        axios.post('http://localhost:8080/react/signup',form)
             .then(()=>{
                 alert('회원가입 성공')
                 window.location.href = '/';  
@@ -51,7 +57,7 @@ const SignUp = () =>{
     }
 
     const checkEmail = () =>{
-        axios.get('/react/email-check', {params: {email: form.email}})
+        axios.get('http://localhost:8080/react/email-check', {params: {email: form.email}})
             .then(result=>{
                 if(result.data){
                     setEmailCheckMessage('사용 가능한 이메일 입니다.');
@@ -118,7 +124,7 @@ const SignUp = () =>{
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" >
                     <Form.Label column sm="5">Phone</Form.Label>
-                    <Col sm="3">
+                    <Col sm="4">
                         <Form.Control type="text" name='phone' placeholder="Phone" onChange={handleChange}/>
                     </Col>
                 </Form.Group>
@@ -131,7 +137,7 @@ const SignUp = () =>{
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" >
                     <Form.Label column sm="5">Address</Form.Label>
-                    <Col sm="3">
+                    <Col sm="4">
                         <Form.Control type="text" name='address' placeholder="address" value={form.address} 
                             onChange={handleChange}/>
                         <Form.Control type="text" name='detailAddress' placeholder="detailAddress" onChange={handleChange}/>
@@ -149,12 +155,8 @@ const SignUp = () =>{
                         <Form.Control type="date" name='birth' placeholder="ex)20010217" onChange={handleChange}/>
                     </Col>
                 </Form.Group>
-
                 <Button type='submit'>회원가입</Button>
-
             </Form>
-
-
 
 
         <Modal show={showPostCode} onHide={()=>setShowPostCode(false)} >
@@ -162,11 +164,27 @@ const SignUp = () =>{
             <Modal.Title>주소검색</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <PostCode onComplete={handleComplete}/>
+                <DaumPostcodeEmbed onComplete={handleComplete} />
             </Modal.Body>
         </Modal>
         </div>
     )
+}
+
+
+const style = {
+    container : {
+        textAlign : 'center',
+        marginTop : '40px',
+    },
+    title : {
+        textAlign: 'center',
+        marginBottom : '20px'
+    },
+    form : {
+        margin: '0 auto',
+        width : '80%'
+    }
 }
 
 export default SignUp;

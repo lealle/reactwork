@@ -2,7 +2,7 @@ import './App.css';
 import {Container, Nav, Navbar} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col } from 'react-bootstrap';
-import { useState, useRef, createContext } from 'react';
+import { useState, useRef, createContext, useEffect } from 'react';
 import Cloth from './component/Cloth';
 import { Route, Routes,  useNavigate } from 'react-router-dom';
 import Detail from './pages/Detail';
@@ -11,33 +11,29 @@ import SignUp from './pages/SignUp';
 import clothList from './data/data2.json';
 import { Button } from "react-bootstrap";
 import axios from 'axios';
+import Login from './pages/Login';
 
      
      
      
 function App() {
+  const [loginUser, setLoginUser] = useState(null);
+  
+  useEffect(()=>{
+    if(sessionStorage.getItem('loginUser')){
+      setLoginUser(JSON.parse(sessionStorage.getItem('loginUser')));
+    }
+  }, [])
 
+    
   const [clickCnt, setClickCnt] = useState(3);
   const goDetail = (i) => {
     navigate(`/detail/${i}`);
   }
 
-  const cnt = useRef(3); 
   const [cloth, setCloth] = useState(clothList);
   let navigate = useNavigate();
 
-  const addCloth = (title, content, price) =>{
-    const c = {
-      id : cnt.current++,
-      title : title,
-      content : content,
-      price : price
-    }
-    setCloth([...cloth,c]);
-  }
-
-  // 재고 변수 
-  const [stock, setStock] = useState([5,20,7,2,1,3]);
 
   return (
     <div className="App">
@@ -46,10 +42,27 @@ function App() {
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/cart')}}>cart</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/signup')}}>SignUp</Nav.Link>
+            <Nav.Link onClick={()=>{
+              if(!loginUser){
+                alert('로그인 후 사용할 수 있는 기능입니다.');
+                return;
+              }
+              navigate('/cart')}}>cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/signup')}}>{loginUser ? '' : 'SignUo' }</Nav.Link>
+            <Nav.Link onClick={()=>{
+              if(loginUser){
+                sessionStorage.removeItem('loginUser');
+                setLoginUser(null)
+                navigate('/')
+              }else{
+                navigate('/login')
+              }
+              }}>{loginUser ? 'Logout' : 'Login' }</Nav.Link>
            
 
+          </Nav>
+          <Nav>
+              {loginUser && (<Navbar.Text style={{color:'white'}}>{loginUser.name}님 로그인상태</Navbar.Text>)}
           </Nav>
         </Container>
       </Navbar>
@@ -91,6 +104,7 @@ function App() {
         } 
           />
         <Route path='/cart' element={
+          
           <div>
             <Cart/>
           </div>
@@ -99,6 +113,11 @@ function App() {
         <Route path='/signup' element={
             <div>
               <SignUp/>
+            </div>
+        } />
+        <Route path='/login' element={
+            <div>
+              <Login/>
             </div>
         } />
         <Route path='/*' element={<div>없는 페이지 입니다.</div>} />
